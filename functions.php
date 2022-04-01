@@ -43,14 +43,14 @@ function hapus_berita($id)
 function ubah_berita($data)
 {
 	global $db;
-	$gambar = $_FILES['gambar']['name'];
 	$id = $data["id_berita"];
 	$judul = htmlspecialchars($data["judul"]);
 	$kategori = htmlspecialchars($data["kategori"]);
 	$isi = $data["isi"];
-	if ($gambar == 0) {
-		$file_tmp = $_FILES['gambar']['tmp_name'];
-		move_uploaded_file($file_tmp, "../img/$gambar");
+	$gambar = $_FILES['gambar']['name'];
+	$gambar_tmp = $_FILES['gambar']['tmp_name'];
+	if ($gambar_tmp != "") {
+		move_uploaded_file($gambar_tmp, "../img/$gambar");
 		// query insert data
 		mysqli_query($db, "UPDATE berita SET judul='$judul', id_kategori='$kategori',
 		isi='$isi',gambar='$gambar' WHERE id_berita=$id");
